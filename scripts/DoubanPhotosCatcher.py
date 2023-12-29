@@ -126,13 +126,16 @@ if __name__ == '__main__':
     #     "https://movie.douban.com/subject/35465737/photos",
     #     "https://movie.douban.com/subject/35907659/photos"
     # ]
+    # urls = {
+    #     "Rafael Silva":         "https://movie.douban.com/celebrity/1430482/photos",
+    #     "Ronen Rubinstein":     "https://movie.douban.com/celebrity/1350633/photos",
+    #     "S01":                  "https://movie.douban.com/subject/33447346/photos",
+    #     "S02":                  "https://movie.douban.com/subject/35031404/photos",
+    #     "S03":                  "https://movie.douban.com/subject/35465737/photos",
+    #     "S04":                  "https://movie.douban.com/subject/35907659/photos"
+    # }
     urls = {
-        "Rafael Silva":         "https://movie.douban.com/celebrity/1430482/photos",
-        "Ronen Rubinstein":     "https://movie.douban.com/celebrity/1350633/photos",
-        "S01":                  "https://movie.douban.com/subject/33447346/photos",
-        "S02":                  "https://movie.douban.com/subject/35031404/photos",
-        "S03":                  "https://movie.douban.com/subject/35465737/photos",
-        "S04":                  "https://movie.douban.com/subject/35907659/photos"
+        "Alan Ritchson":        "https://movie.douban.com/celebrity/1254642/photos"
     }
     sources = cache.get("sources", {})
     for name, url in urls.items():

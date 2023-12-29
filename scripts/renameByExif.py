@@ -22,14 +22,16 @@ import tkinter as tk
 from tkinter import filedialog
 
 
-MY_DATE_FORMAT = '%Y%m%d_%H%M%S'
-DELETE_FILES  = ['thumbs.db', 'sample.dat']
-DELETE_FILTER = []
-PIC_FILTER    = ['.jpg', '.bmp', '.jpeg', '.heic', '.png', '.dng', '.arw', '.gif']
-MOVIE_FILTER  = ['.mp4', '.avi', '.mov', '.mpg', '.mpeg']
-PIC_CONF_FILETER  = ['.xmp']
-MOVIE_CONF_FILTER = ['.xml', '.thm']
-SUFFIX_FILTER = MOVIE_FILTER + PIC_FILTER
+MY_DATE_FORMAT      = '%Y%m%d_%H%M%S'
+OUTPUT              = 'output'
+IF_SKIP_OUTPUT      = True
+DELETE_FILES        = ['thumbs.db', 'sample.dat']
+DELETE_FILTER       = []
+PIC_FILTER          = ['.jpg', '.bmp', '.jpeg', '.heic', '.png', '.dng', '.arw', '.gif']
+MOVIE_FILTER        = ['.mp4', '.avi', '.mov', '.mpg', '.mpeg']
+PIC_CONF_FILETER    = ['.xmp']
+MOVIE_CONF_FILTER   = ['.xml', '.thm']
+SUFFIX_FILTER       = MOVIE_FILTER + PIC_FILTER
 
 
 def isPicFileType(filename):
@@ -48,9 +50,10 @@ def isMovieFileType(filename):
 
 def isFormatedFileName(filename):
     # 判断是否已经是格式化过的文件名
+    filename_nopath = os.path.basename(filename)
+    f, e = os.path.splitext(filename_nopath)
+    f = f[:min(len(f), 15)]
     try:
-        filename_nopath = os.path.basename(filename)
-        f, e = os.path.splitext(filename_nopath)
         time.strptime(f, MY_DATE_FORMAT)
         return True
     except ValueError:
@@ -210,6 +213,8 @@ def scandir(startdir):
             else:
                 pass
         elif os.path.isdir(obj):
+            if obj.lower() == OUTPUT and IF_SKIP_OUTPUT:
+                continue
             scandir(obj)
         else:
             pass
