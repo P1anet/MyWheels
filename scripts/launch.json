@@ -1,0 +1,47 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: search",
+            "type": "python",
+            "request": "launch",
+            // "module": "enter-your-module-name",
+            "program": "${workspaceFolder}/heteroCode/search.py",
+            // "program": "${file}",
+            "justMyCode": true, 
+            "console": "integratedTerminal",
+            "args": [
+                "--model_name",             "vgg16",
+                "--dataset_name",           "mnist",
+                "--xbar_type",              "hyb", 
+                "--normalization_method",   "none", 
+                "--search_algorithm",       "rl", 
+                "--lbound",                 "5", 
+                "--rbound",                 "9", 
+                "--use_archive",            
+                "--enable_tile_merge",      
+                // "--suffix",                 "first", 
+                // "--seed",                   "486", 
+                "--warmup",                 "20", 
+                "--train_episode",          "300", 
+                "--n_iter",                 "100", 
+                "--init_points",            "5", 
+                "--pop_size",               "50", 
+                "--n_generations",          "200", 
+                "--homo_size",              "7", 
+            ],
+        },
+        {
+            "name": "Python: Debug modify_ckptdata_from_mnsim_vgg16",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/heteroCode/MNSIM_Python/tools/modify_ckptdata_from_mnsim_vgg16.py",
+            "console": "integratedTerminal",
+            "args": [
+                "-t", "MNSIM_Python/ckpt/vgg16_mnist_new.pth.tar.mnsim",
+                "-f", "ckpt/vgg16_mnist_pretrained_90epochs.ckpt"
+            ],
+
+        }
+    ]
+}

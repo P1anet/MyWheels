@@ -32,7 +32,7 @@ LOG_LEVEL = logging.INFO
 LOG_FORMATTER = logging.Formatter('[%(asctime)s] [%(levelname)s] [%(filename)s:%(lineno)d] %(message)s', TIME_PATTERN["text"])
 LOGGER = logging.getLogger(LOGGER_NAME)
 LOGGER.setLevel(LOG_LEVEL)
-FH = logging.FileHandler(LOG_PATH)
+FH = logging.FileHandler(LOG_PATH, encoding="utf-8")
 FH.setLevel(LOG_LEVEL)
 FH.setFormatter(LOG_FORMATTER)
 LOGGER.addHandler(FH)

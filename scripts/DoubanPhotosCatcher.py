@@ -7,6 +7,7 @@ import tkinter as tk
 from tkinter import filedialog
 import logging
 import json
+import random
 
 # critical > error > warning > info > debug
 LOGGER_NAME = "basic_logger"
@@ -35,7 +36,7 @@ class DoubanPhotosCatcher:
         self.__failedUrls = []
 
     def run(self):
-        LOGGER.info(f"Getting photos from {self.__url}")
+        LOGGER.info(f"Getting photos of {self.__id} from {self.__url}")
         r = requests.get(self.__url, headers=headers)
         html = r.text
         soup = BeautifulSoup(html, 'html.parser')
@@ -86,6 +87,7 @@ class DoubanPhotosCatcher:
             with open(file_path, 'wb') as f:
                 f.write(r.content)
             i += 1
+            time.sleep(random.random())
             if i % 5 == 0:
                 time.sleep(1)
 
@@ -97,7 +99,7 @@ if __name__ == '__main__':
     # 指定保存文件夹路径
     d_path = filedialog.askdirectory()
     # f_path = filedialog.askopenfilename()
-    CACHE_PATH = os.path.join(d_path, "cache.json")
+    CACHE_PATH = os.path.join(d_path, "DoubanPhotosCatcherCache.json")
     cache = {}
     if os.path.exists(CACHE_PATH):
         with open(CACHE_PATH, mode='r', encoding='utf-8') as f:
@@ -105,7 +107,7 @@ if __name__ == '__main__':
     # 记录日志路径
     LOG_PATH = os.path.join(d_path, f'{name_nosuffix}.txt')
     # FileHandler
-    FH = logging.FileHandler(LOG_PATH)
+    FH = logging.FileHandler(LOG_PATH, encoding="utf-8")
     FH.setLevel(LOG_LEVEL)
     FH.setFormatter(LOG_FORMATTER)
     LOGGER.addHandler(FH)
@@ -126,16 +128,21 @@ if __name__ == '__main__':
     #     "https://movie.douban.com/subject/35465737/photos",
     #     "https://movie.douban.com/subject/35907659/photos"
     # ]
-    # urls = {
-    #     "Rafael Silva":         "https://movie.douban.com/celebrity/1430482/photos",
-    #     "Ronen Rubinstein":     "https://movie.douban.com/celebrity/1350633/photos",
-    #     "S01":                  "https://movie.douban.com/subject/33447346/photos",
-    #     "S02":                  "https://movie.douban.com/subject/35031404/photos",
-    #     "S03":                  "https://movie.douban.com/subject/35465737/photos",
-    #     "S04":                  "https://movie.douban.com/subject/35907659/photos"
-    # }
     urls = {
-        "Alan Ritchson":        "https://movie.douban.com/celebrity/1254642/photos"
+        # "Rafael Silva":         "https://movie.douban.com/celebrity/1430482/photos",
+        # "Ronen Rubinstein":     "https://movie.douban.com/celebrity/1350633/photos",
+        # "S01":                  "https://movie.douban.com/subject/33447346/photos",
+        # "S02":                  "https://movie.douban.com/subject/35031404/photos",
+        # "S03":                  "https://movie.douban.com/subject/35465737/photos",
+        # "S04":                  "https://movie.douban.com/subject/35907659/photos"
+        # "Alan Ritchson":        "https://movie.douban.com/celebrity/1254642/photos",
+        # "Brian J. Smith":       "https://movie.douban.com/celebrity/1027330/photos/",
+        # "Miguel Ángel Silvestre":   "https://movie.douban.com/celebrity/1000417/photos/",
+        # "Russell Tovey":        "https://movie.douban.com/celebrity/1040712/photos/",
+        # "Nick Jonas":           "https://movie.douban.com/celebrity/1049552/photos/",
+        # "Sebastian Stan":       "https://movie.douban.com/celebrity/1021985/photos/",
+        # "Max Riemelt":          "https://movie.douban.com/celebrity/1014166/photos/",
+        "Ryan Reynolds":        "https://movie.douban.com/celebrity/1053623/photos/"
     }
     sources = cache.get("sources", {})
     for name, url in urls.items():
@@ -145,5 +152,5 @@ if __name__ == '__main__':
         catcher.run()
         cache[catcher._DoubanPhotosCatcher__name] = catcher._DoubanPhotosCatcher__cacheUrls + catcher._DoubanPhotosCatcher__downloadUrls
     cache["sources"] = sources
-    with open(CACHE_PATH, "w") as f:
+    with open(CACHE_PATH, "w", encoding="utf-8") as f:
         json.dump(cache, f, ensure_ascii=False, indent=4)
